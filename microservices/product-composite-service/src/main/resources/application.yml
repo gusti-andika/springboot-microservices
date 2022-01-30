@@ -1,0 +1,63 @@
+server.port: 7000
+
+api:
+   common:
+      title: Sample API
+      description: Description of the API...
+      version: 1.0.0
+      termsOfServiceUrl: MINE TERMS OF SERVICE URL
+      license: License
+      licenseUrl: MyLicense URL
+      contact:
+         name: Contact
+         url: Me
+         email: me@email.com
+
+   product-composite:
+      get-product:
+         description:  Returns a composite view of the specified product id
+         notes: |
+           # Normal response
+           If the requested product id is found the method will return information regarding:
+           1. Product information
+           1. Reviews
+           1. Recommendations
+           1. Service Addresses
+           (technical information regarding the addresses of the microservices that created the response)
+   
+           # Expected partial and error responses
+           1. If no product information is found, a <b>404 - Not Found</b> error will be returned
+           1. In no recommendations or reviews are found for a product, a partial response will be returne
+           d
+
+app:
+   product-service:
+      host: localhost
+      port: 7001
+   review-service:
+      host: localhost
+      port: 7002
+   recommendation-service:
+      host: localhost
+      port: 7003
+      
+logging:
+  level:
+    root: DEBUG
+    se.magnus: DEBUG
+    com.example: DEBUG
+    
+---
+spring.profiles: docker
+
+server.port: 8080
+app:
+   product-service:
+      host: product
+      port: 8080
+   review-service:
+      host: review
+      port: 8080
+   recommendation-service:
+      host: recommendation
+      port: 8080
